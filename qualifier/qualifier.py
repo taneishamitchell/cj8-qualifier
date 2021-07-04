@@ -1,5 +1,6 @@
-from typing import Any, List, Optional, NewType
+from typing import Any, List, Optional
 import copy
+
 
 def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, centered: bool = False) -> str:
     """
@@ -28,7 +29,7 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
     class Fruit:
         def __init__(self, fruit: str):
             self.fruit = fruit
-        
+
         def __len__(self):
             return len(self.fruit)
 
@@ -37,7 +38,7 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
 
         def __repr__(self):
             return f'Fruit <{self.fruit}>'
-    
+
     # Check One Dimensional Array
     if len(longest_sample) == 1:
         longest_length = len(longest_sample[0])
@@ -68,13 +69,12 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
         table += str(f'{bottom_left}{horizontal_line}{horizontal_line * longest_length}{horizontal_line}{bottom_right}\n')
     else:
         longest_length = []
-        longest = []
         # Build temp list with longest & biggest elements
         for obj in rows:
             x = 0
             for item in obj:
                 try:
-                    if item == None:
+                    if item is None:
                         if len(str(longest_sample[x])) <= len(str(item)):
                             longest_sample[x] = str(item)
                     elif isinstance(item, int) or isinstance(item, float):
@@ -92,12 +92,12 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
 
         for i in longest_sample:
             if isinstance(i, int) or isinstance(i, float):
-               longest_length.append(len(str(i)))
+                longest_length.append(len(str(i)))
             else:
-               longest_length.append(len(i))
+                longest_length.append(len(i))
         if labels:
             for x in range(len(labels)):
-                if isinstance(labels[x], int) or labels[x] == None or isinstance(labels[x], float) or isinstance(labels[x], complex):
+                if isinstance(labels[x], int) or labels[x] is None or isinstance(labels[x], float) or isinstance(labels[x], complex):
                     if len(str(labels[x])) > longest_length[x]:
                         longest_length[x] = len(str(labels[x]))
                 if len(str(labels[x])) > longest_length[x]:
@@ -110,13 +110,13 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
             if len(longest_length) > i+1:
                 table += str(f'{horizontal_line}{top_tee}')
         table += str(f'{horizontal_line}{top_right}\n')
-        
+
         # If labels exist format accordingly
         if labels:
-            table += str(f'{vertical_line}')    
+            table += str(f'{vertical_line}')
             if centered is True:
                 for ix in range(len(labels)):
-                    if labels[ix] == None:
+                    if labels[ix] is None:
                         table += str(f' {str(labels[ix]):^{longest_length[ix]}} {vertical_line}')
                     else:
                         table += str(f' {labels[ix]:^{longest_length[ix]}} {vertical_line}')
@@ -146,5 +146,5 @@ def make_table(rows: List[List[Any]], labels: Optional[List[Any]] = None, center
             if len(longest_length) > i+1:
                 table += str(f'{horizontal_line}{inverted_tee}')
         table += str(f'{horizontal_line}{bottom_right}\n')
-    
+
     return table
